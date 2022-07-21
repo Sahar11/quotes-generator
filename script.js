@@ -8,13 +8,11 @@ const year = document.getElementById('year');
 
 let apiQuotes = [];
 
-// Show Loading spinner
 function showLoadingSpinner(){
   loader.hidden = false;
   quoteContainer.hidden = true;
 }
 
-//Remove Loading spinner
 function removeLoadingSpinner() {
   quoteContainer.hidden = false;
   loader.hidden = true;
@@ -61,6 +59,7 @@ async function getQuotes() {
   } catch (error){
     // Catch Error Here
    console.log("whoops, no quote", error);
+   getQuotes();
   }
   currentYear();
 }
