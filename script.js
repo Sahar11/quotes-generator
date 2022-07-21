@@ -7,21 +7,22 @@ const loader = document.getElementById('loader');
 const year = document.getElementById('year');
 
 let apiQuotes = [];
-// Show Loading
-function loading(){
+
+// Show Loading spinner
+function showLoadingSpinner(){
   loader.hidden = false;
   quoteContainer.hidden = true;
 }
 
-//Hide Loading
-function complete() {
+//Remove Loading spinner
+function removeLoadingSpinner() {
   quoteContainer.hidden = false;
   loader.hidden = true;
 }
 
 //Show new Quote
 function newQuote() {
-  loading();
+  showLoadingSpinner();
   // Pick a random quote from apiQuotes array
   const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
   //Check if Author feild is blank and replace it with 'unknown'
@@ -40,16 +41,17 @@ function newQuote() {
  //Set Quote, Hide Loader
  quoteText.textContent = quote.text;
  currentYear();
- complete();
+ removeLoadingSpinner();
 }
+
+// Right copy right in footer
 function currentYear() {
   year.textContent =  `Copyright ©  Sahar   ${new Date().getFullYear()}`;
 }
 
 // Get quotes from API
-
 async function getQuotes() {
-  loading();
+  showLoadingSpinner();
   const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
   const apiUrl = 'https://type.fit/api/quotes';
   try {
@@ -64,7 +66,6 @@ async function getQuotes() {
 }
 
 // Tweet Quote
-
 function tweetQuote() {
   
   const twitterUrl =`https://twitter.com/compose/tweet?text=${quoteText.textContent} - ${authorText.textContent}`;
@@ -75,6 +76,5 @@ function tweetQuote() {
 newQuoteBtn.addEventListener('click', newQuote);
 twitterBtn.addEventListener('click', tweetQuote);
 
-//console.log("TESTING");
 //on Load
 getQuotes();
