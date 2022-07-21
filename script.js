@@ -4,6 +4,7 @@ const authorText = document.getElementById('author');
 const twitterBtn = document.getElementById('twitter');
 const newQuoteBtn = document.getElementById('new-quote');
 const loader = document.getElementById('loader');
+const year = document.getElementById('year');
 
 let apiQuotes = [];
 // Show Loading
@@ -38,7 +39,11 @@ function newQuote() {
  }
  //Set Quote, Hide Loader
  quoteText.textContent = quote.text;
+ currentYear();
  complete();
+}
+function currentYear() {
+  year.textContent =  `Copyright ©  Sahar   ${new Date().getFullYear()}`;
 }
 
 // Get quotes from API
