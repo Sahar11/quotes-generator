@@ -23,7 +23,7 @@ function complete() {
 function newQuote() {
   loading();
   // Pick a random quote from apiQuotes array
-  const quote = localQuotes[Math.floor(Math.random() * localQuotes.length)];
+  const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
   //Check if Author feild is blank and replace it with 'unknown'
 
   if(!quote.author) {
@@ -48,21 +48,25 @@ function currentYear() {
 
 // Get quotes from API
 
-// async function getQuotes() {
-//   const apiURL = " https://random-math-quote-api.herokuapp.com/ 213 ";
-//   try {
-//   const response = await fetch(apiUrl);
-//   apiQuotes = await response.json();
-//   newQuote();
-//   } catch (error){
-//     // Catch Error Here
-  
-//   }
-// }
+async function getQuotes() {
+  loading();
+  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  const apiUrl = 'https://type.fit/api/quotes';
+  try {
+  const response = await fetch(apiUrl);
+  apiQuotes = await response.json();
+  newQuote();
+  } catch (error){
+    // Catch Error Here
+   console.log("whoops, no quote", error);
+  }
+  currentYear();
+}
 
 // Tweet Quote
 
 function tweetQuote() {
+  
   const twitterUrl =`https://twitter.com/compose/tweet?text=${quoteText.textContent} - ${authorText.textContent}`;
   window.open(twitterUrl, '_blank');
 }
@@ -73,4 +77,4 @@ twitterBtn.addEventListener('click', tweetQuote);
 
 //console.log("TESTING");
 //on Load
-newQuote();
+getQuotes();
